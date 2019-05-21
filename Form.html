@@ -12,24 +12,58 @@
             <input type="submit">
             <input type="reset">
         </form>
+        <button id="calcula">Calcula Novo/Velha</button>
         <ul>
 
         </ul>
+        <p></p>
         <script>
+            var convidados = [];
+            var lista = document.getElementsByTagName("ul")[0];
+            var saida = document.getElementsByTagName("p")[0];
+            var botaoCalcula = document.querySelector("#calcula");
+
             document.forms.convidado.addEventListener("submit", processaEnvio);
+            botaoCalcula.addEventListener("click", calculaMaisNovoVelho);
+
             function processaEnvio(e){
                 e.preventDefault();
                 console.log("Formulário enviado!");
 
                 var nome = document.forms.convidado.nome.value;
-                var idade = document.forms.convidado.idade.value;
-                var lista = document.getElementsByTagName("ul")[0];
+                var idade = Number(document.forms.convidado.idade.value);
+                var novoConvidado= {"nome": nome, "idade": idade};
+                convidados.push(novoConvidado);
+                console.log(nome, idade);
+
                 var novoLi = document.createElement("li");
-                novoLi.textContent = nome+" de " +idade+" anos ";
+                novoLi.textContent = novoConvidado.nome+" de " +novoConvidado.idade+" anos ";
                 lista.appendChild(novoLi);
+
                 document.forms.convidado.reset();
                 document.forms.convidado.nome.focus();
-        }
+            }
+
+            function calculaMaisNovoVelho(){
+                if(convidados.length==0)
+                    saida.textContent = "Não existem convidados cadastrados";
+                else{
+                    var novo = convidados[0]
+                    var velho = convidados [0]
+                    for (var i = 0; i < convidados.length; i++) {
+                        var conv = convidados[i];
+                        if(conv.idade < novo.idade)
+                        {
+                            novo = conv;
+                        }
+                        if(conv.idade > velho.idade)
+                        {
+                            velho = conv;
+                        }
+                    }
+                }
+                saida.textContent = "O "+novo.nome+" é o mais novo e "+velho.nome+" é o mais velho!";
+            }
         </script>
     </body>
 
