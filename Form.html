@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Formulario</title>
+    </head>
+    <body>
+        <h1>Lista de convidados</h1>
+        <form name="convidado" method="POST">
+            <input type="text" name="nome">
+            <input type="text" name="idade">
+            <br>
+            <input type="submit">
+            <input type="reset">
+        </form>
+        <ul>
+
+        </ul>
+        <script>
+            document.forms.convidado.addEventListener("submit", processaEnvio);
+            function processaEnvio(e){
+                e.preventDefault();
+                console.log("Formulário enviado!");
+
+                var nome = document.forms.convidado.nome.value;
+                var idade = document.forms.convidado.idade.value;
+                var lista = document.getElementsByTagName("ul")[0];
+                var novoLi = document.createElement("li");
+                novoLi.textContent = nome+" de " +idade+" anos ";
+                lista.appendChild(novoLi);
+                document.forms.convidado.reset();
+                document.forms.convidado.nome.focus();
+        }
+        </script>
+    </body>
+
+</html>
